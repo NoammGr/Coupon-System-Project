@@ -112,6 +112,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             System.out.println("Done !");
             resultSet.close();
             statement.close();
+            return companies;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
