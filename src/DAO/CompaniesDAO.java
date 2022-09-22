@@ -11,7 +11,7 @@ public interface CompaniesDAO {
 
     public void updateCompany(Company company);
 
-    public void deleteCompany(Company company);
+    public void deleteCompany(int companyId);
 
     public ArrayList<Company> getAllCompanies();
 

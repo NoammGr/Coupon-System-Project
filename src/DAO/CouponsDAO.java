@@ -9,11 +9,11 @@ public interface CouponsDAO {
 
     public void updateCoupon(Coupon coupon);
 
-    public void deleteCoupon(Coupon coupon);
+    public void deleteCoupon(int couponId);
 
     public ArrayList<Coupon> getAllCoupon();
 
-    public Coupon getOneCoupon(Coupon coupon);
+    public Coupon getOneCoupon(int couponId);
 
     public void addCouponPurchase(int customerId, int couponId);
 

@@ -4,9 +4,19 @@ use CouponSystem;
 
 select * from Companies;
 
+select * from Customers;
+
+select * from Coupons;
+
 select locate(email, password) from Companies ;
 
 drop table Companies;
+
+drop table Categories;
+
+drop table Coupons;
+
+drop table customers_vs_coupons;
 
 drop schema CouponSystem;
 
@@ -26,17 +36,16 @@ email varchar(100),
 password varchar(20)
 );
 
-create table Categories(
-id int primary key auto_increment,
-name varchar(25)
-);
+-- create table Categories(
+-- id int primary key auto_increment,
+-- name varchar(25)
+-- );
 
 create table Coupons(
 id int primary key auto_increment,
 company_id int,
 foreign key (company_id) references Companies(id),
-category_id int,
-foreign key (category_id) references Categories(id),
+category enum('Food', 'Electricity', 'Restaurant', 'Vacation', 'Movies', 'Shopping'),
 title varchar(50),
 description varchar(150),
 start_date date,

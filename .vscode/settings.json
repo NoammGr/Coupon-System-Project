@@ -3,6 +3,7 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "/Users/noamgreedi/Library/Mobile Documents/com~apple~CloudDocs/School/Workspaces /MySQL/mysql-connector-java-8.0.30/**/*.jar"
+        "/Users/noamgreedi/Library/Mobile Documents/com~apple~CloudDocs/School/Workspaces /MySQL/mysql-connector-java-8.0.30/**/*.jar",
+        "/Users/noamgreedi/Library/Mobile Documents/com~apple~CloudDocs/School/Workspaces /Tools/mysql-connector-java-8.0.30/**/*.jar"
     ]
 }

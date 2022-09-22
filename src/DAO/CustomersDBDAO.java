@@ -7,16 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import Connection.ConnectionPool;
-import Core.Company;
 import Core.CouponSystemException;
+import Core.Customer;
 
-public class CompaniesDBDAO implements CompaniesDAO {
+public class CustomersDBDAO implements CustomersDAO {
 
     private static ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static Connection connection = connectionPool.getConnection();
 
     @Override
-    public boolean isCompanyExists(String email, String password) {
+    public boolean isCustomerExists(String email, String password) {
         boolean isExists = false;
         String sql = "select locate(?,?) from Companies";
         try {
@@ -39,36 +39,17 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public void addCompany(Company company) {
-        String sql = "insert into Companies(id, name, email, password) values(?,?,?,?)";
+    public void addCustomer(Customer customer) {
+        String sql = "insert into Customers(id, first_name, last_name, email, password) values(?,?,?,?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, company.getId());
-            statement.setString(2, company.getName());
-            statement.setString(3, company.getEmail());
-            statement.setString(4, company.getPassword());
+            statement.setInt(1, customer.getId());
+            statement.setString(2, customer.getFirstName());
+            statement.setString(3, customer.getLastName());
+            statement.setString(4, customer.getEmail());
+            statement.setString(5, customer.getPassword());
             statement.executeUpdate();
-            System.out.println("Added company successfully !");
-        } catch (Exception e) {
-            throw new CouponSystemException();
-
-        } finally {
-            connectionPool.restoreConnection(connection);
-        }
-        System.out.println("Disconnected from the server ");
-    }
-
-    @Override
-    public void updateCompany(Company company) {
-        String sql = "update Companies set id = ?, name = ?, email = ?, password = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, company.getId());
-            statement.setString(2, company.getName());
-            statement.setString(3, company.getEmail());
-            statement.setString(4, company.getPassword());
-            statement.executeUpdate();
-            System.out.println("Company updated successfully !");
+            System.out.println("Added user successfully !");
         } catch (Exception e) {
             throw new CouponSystemException();
         } finally {
@@ -78,13 +59,17 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public void deleteCompany(int companyId) {
-        String sql = "delete from Companies where id = ?";
+    public void updateCustomer(Customer customer) {
+        String sql = "update Customers set id = ?, first_name = ?, last_name = ?, email = ?, password = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, companyId);
+            statement.setInt(1, customer.getId());
+            statement.setString(2, customer.getFirstName());
+            statement.setString(3, customer.getLastName());
+            statement.setString(4, customer.getEmail());
+            statement.setString(5, customer.getPassword());
             statement.executeUpdate();
-            System.out.println("Company has been deleted !");
+            System.out.println("Customer updated successfully !");
         } catch (Exception e) {
             throw new CouponSystemException();
         } finally {
@@ -94,20 +79,36 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public ArrayList<Company> getAllCompanies() {
-        ArrayList<Company> companies = new ArrayList<Company>();
-        String sql = "select * from Companies";
+    public void deleteCustomer(int customerId) {
+        String sql = "delete from Customers where id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, customerId);
+            statement.executeUpdate();
+            System.out.println("Customer has been deleted !");
+        } catch (Exception e) {
+            throw new CouponSystemException();
+        } finally {
+            connectionPool.restoreConnection(connection);
+        }
+        System.out.println("Disconnected from the server ");
+    }
+
+    @Override
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<Customer>();
+        String sql = "select * from Customers";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                companies.add(new Company(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4)));
+                customers.add(new Customer(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5)));
             }
             System.out.println("Done !");
             resultSet.close();
             statement.close();
-            return companies;
+            return customers;
         } catch (Exception e) {
             throw new CouponSystemException();
         } finally {
@@ -116,18 +117,19 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     @Override
-    public Company getOneCompany(int companyId) {
-        Company company = new Company();
-        String sql = "select * from Companies where id = ? ";
+    public Customer getOneCustomer(int customerId) {
+        Customer customer = new Customer();
+        String sql = "select * from Customers where id = ? ";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, companyId);
+            statement.setInt(1, customerId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                company.setId(resultSet.getInt(1));
-                company.setName(resultSet.getString(2));
-                company.setEmail(resultSet.getString(3));
-                company.setPassword(resultSet.getString(4));
+                customer.setId(resultSet.getInt(1));
+                customer.setFirstName(resultSet.getString(2));
+                customer.setLastName(resultSet.getString(3));
+                customer.setEmail(resultSet.getString(4));
+                customer.setPassword(resultSet.getString(5));
             } else {
                 System.out.println("There was a problem");
                 return null;
@@ -140,7 +142,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         } finally {
             connectionPool.restoreConnection(connection);
         }
-        return company;
+        return customer;
     }
 
 }

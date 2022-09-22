@@ -1,6 +1,6 @@
 package Core;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Coupon {
     private int id;
@@ -8,14 +8,17 @@ public class Coupon {
     private Category category;
     private String title;
     private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Date startDate;
+    private Date endDate;
     private int amount;
     private double price;
     private String image;
 
-    public Coupon(int id, int companyId, Category category, String title, String description, LocalDateTime startDate,
-            LocalDateTime endDate, int amount, double price, String image) {
+    public Coupon() {
+    }
+
+    public Coupon(int id, int companyId, Category category, String title, String description, Date startDate,
+            Date endDate, int amount, double price, String image) {
         this.id = id;
         this.companyId = companyId;
         this.category = category;
@@ -68,19 +71,19 @@ public class Coupon {
         this.description = description;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return this.endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
