@@ -1,5 +1,3 @@
-// Created by Noam //
-
 package DAO;
 
 import java.sql.Connection;
