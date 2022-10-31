@@ -3,20 +3,25 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+// import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import Connection.ConnectionPool;
+// import Core.Coupon;
 import Core.CouponSystemException;
 import Core.Customer;
 
 public class CustomersDBDAO implements CustomersDAO {
 
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private static Connection connection = connectionPool.getConnection();
-
+    /**
+     * Using this method will check if the customer exists ,
+     * to use this method you need to insert customer email and customer password .
+     */
     @Override
-    public boolean isCustomerExists(String email, String password) {
+    public boolean isCustomerExists(String email, String password) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         boolean isExists = false;
         String sql = "select locate(?,?) from Companies";
         try {
@@ -31,15 +36,21 @@ public class CustomersDBDAO implements CustomersDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("email or password is wrong try again !");
         } finally {
             connectionPool.restoreConnection(connection);
         }
         return isExists;
     }
 
+    /**
+     * Using this method will add customer to data base ,
+     * you need to insert customer object in order to make this mthod work .
+     */
     @Override
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         String sql = "insert into Customers(id, first_name, last_name, email, password) values(?,?,?,?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -55,11 +66,16 @@ public class CustomersDBDAO implements CustomersDAO {
         } finally {
             connectionPool.restoreConnection(connection);
         }
-        System.out.println("Disconnected from the server ");
     }
 
+    /**
+     * Using this method will update custoemr in data base ,
+     * you need to insert customer object in order to make this mthod work .
+     */
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         String sql = "update Customers set id = ?, first_name = ?, last_name = ?, email = ?, password = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -75,11 +91,16 @@ public class CustomersDBDAO implements CustomersDAO {
         } finally {
             connectionPool.restoreConnection(connection);
         }
-        System.out.println("Disconnected from the server ");
     }
 
+    /**
+     * Using this method will delete customer ,
+     * you need to insert customer-id .
+     */
     @Override
-    public void deleteCustomer(int customerId) {
+    public void deleteCustomer(int customerId) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         String sql = "delete from Customers where id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -91,11 +112,15 @@ public class CustomersDBDAO implements CustomersDAO {
         } finally {
             connectionPool.restoreConnection(connection);
         }
-        System.out.println("Disconnected from the server ");
     }
 
+    /**
+     * This method returns all customers exists in data base .
+     */
     @Override
-    public ArrayList<Customer> getAllCustomers() {
+    public ArrayList<Customer> getAllCustomers() throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         ArrayList<Customer> customers = new ArrayList<Customer>();
         String sql = "select * from Customers";
         try {
@@ -105,7 +130,6 @@ public class CustomersDBDAO implements CustomersDAO {
                 customers.add(new Customer(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
                         resultSet.getString(4), resultSet.getString(5)));
             }
-            System.out.println("Done !");
             resultSet.close();
             statement.close();
             return customers;
@@ -116,8 +140,14 @@ public class CustomersDBDAO implements CustomersDAO {
         }
     }
 
+    /**
+     * This method will return !one! customer object ,
+     * you need to insert custoemr-id .
+     */
     @Override
-    public Customer getOneCustomer(int customerId) {
+    public Customer getOneCustomer(int customerId) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
         Customer customer = new Customer();
         String sql = "select * from Customers where id = ? ";
         try {
@@ -134,7 +164,6 @@ public class CustomersDBDAO implements CustomersDAO {
                 System.out.println("There was a problem");
                 return null;
             }
-            System.out.println("Done !");
             resultSet.close();
             statement.close();
         } catch (Exception e) {
@@ -145,4 +174,55 @@ public class CustomersDBDAO implements CustomersDAO {
         return customer;
     }
 
+    /**
+     * Using this method will return customer object ,
+     * using customer-email .
+     */
+    public Customer getOneCustomer(String email) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
+        Customer customer = new Customer();
+        String sql = "select * from Customers where email = ? ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                customer.setId(resultSet.getInt(1));
+                customer.setFirstName(resultSet.getString(2));
+                customer.setLastName(resultSet.getString(3));
+                customer.setEmail(resultSet.getString(4));
+                customer.setPassword(resultSet.getString(5));
+            } else {
+                return null;
+            }
+            resultSet.close();
+            statement.close();
+        } catch (Exception e) {
+            throw new CouponSystemException();
+        } finally {
+            connectionPool.restoreConnection(connection);
+        }
+        return customer;
+    }
+
+    // /**
+    //  * 
+    //  */
+    // @Override
+    // public void customerCouponUpdate(Customer customer, Coupon coupon) {
+    //     ConnectionPool connectionPool = ConnectionPool.getInstance();
+    //     Connection connection = connectionPool.getConnection();
+    //     String sql = "insert into customers_vs_coupons values (?,?)";
+    //     try {
+    //         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    //         preparedStatement.setInt(1, customer.getId());
+    //         preparedStatement.setInt(2, coupon.getId());
+    //         preparedStatement.executeUpdate();
+    //     } catch (SQLException e) {
+    //         throw new CouponSystemException("Update failed !");
+    //     } finally {
+    //         connectionPool.restoreConnection(connection);
+    //     }
+    // }
 }
