@@ -57,19 +57,22 @@ public class CustomersFacade extends ClientFacade {
         CouponsDAO couponsDAO = new CouponsDBDAO();
         Coupon tempCoupon = couponsDAO.getOneCoupon(coupon.getId());
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-
-        if (tempCoupon == null) {
-            throw new CouponSystemException("Coupon  dose not exist !");
+        try {
+            if (tempCoupon == null) {
+                throw new CouponSystemException("Coupon  dose not exist !");
+            }
+            if (tempCoupon.getEndDate() == date) {
+                throw new CouponSystemException("Coupon passed deadline");
+            }
+            if (tempCoupon.getAmount() == 0) {
+                throw new CouponSystemException("Coupon out of stock ! please try again later");
+            }
+            couponsDAO.addCouponPurchase(this.customerId, tempCoupon.getId());
+            tempCoupon.setAmount(tempCoupon.getAmount() - 1);
+            couponsDAO.updateCoupon(tempCoupon);
+        } catch (Exception e) {
+            throw new CouponSystemException("Error in getting purchase coupon method ! " + e);
         }
-        if (tempCoupon.getEndDate() == date) {
-            throw new CouponSystemException("Coupon passed deadline");
-        }
-        if (tempCoupon.getAmount() == 0) {
-            throw new CouponSystemException("Coupon out of stock ! please try again later");
-        }
-        couponsDAO.addCouponPurchase(this.customerId, tempCoupon.getId());
-        tempCoupon.setAmount(tempCoupon.getAmount() - 1);
-        couponsDAO.updateCoupon(tempCoupon);
     }
 
     /**
