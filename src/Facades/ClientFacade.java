@@ -7,6 +7,9 @@ import DAO.CouponsDBDAO;
 import DAO.CustomersDAO;
 import DAO.CustomersDBDAO;
 
+/**
+ * This is abstract class that contains all the login method
+ */
 public abstract class ClientFacade {
 
     abstract boolean Login(String email, String password);

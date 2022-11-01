@@ -12,6 +12,11 @@ import Connection.ConnectionPool;
 import Core.CouponSystemException;
 import Core.Customer;
 
+/**
+ * This class is implementation of CustomersDAO , in this class we are using sql
+ * syntax and connetion pool
+ * to connect with the data base.
+ */
 public class CustomersDBDAO implements CustomersDAO {
 
     /**
@@ -62,7 +67,7 @@ public class CustomersDBDAO implements CustomersDAO {
             statement.executeUpdate();
             System.out.println("Added user successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("Erorr in addCustomer method  - " + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -205,24 +210,4 @@ public class CustomersDBDAO implements CustomersDAO {
         }
         return customer;
     }
-
-    // /**
-    //  * 
-    //  */
-    // @Override
-    // public void customerCouponUpdate(Customer customer, Coupon coupon) {
-    //     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    //     Connection connection = connectionPool.getConnection();
-    //     String sql = "insert into customers_vs_coupons values (?,?)";
-    //     try {
-    //         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    //         preparedStatement.setInt(1, customer.getId());
-    //         preparedStatement.setInt(2, coupon.getId());
-    //         preparedStatement.executeUpdate();
-    //     } catch (SQLException e) {
-    //         throw new CouponSystemException("Update failed !");
-    //     } finally {
-    //         connectionPool.restoreConnection(connection);
-    //     }
-    // }
 }

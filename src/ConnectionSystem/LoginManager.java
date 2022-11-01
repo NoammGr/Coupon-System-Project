@@ -15,7 +15,7 @@ public class LoginManager {
     Thread dThread = new Thread(couponExpirationDailyJob);
 
     public LoginManager() {
-        dThread.start();
+        // dThread.start();
     }
 
     private static LoginManager instance;

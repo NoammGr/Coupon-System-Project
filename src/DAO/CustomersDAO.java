@@ -2,7 +2,6 @@ package DAO;
 
 import java.util.ArrayList;
 
-// import Core.Coupon;
 import Core.Customer;
 
 public interface CustomersDAO {
@@ -19,6 +18,4 @@ public interface CustomersDAO {
     public Customer getOneCustomer(int customerId);
 
     public Customer getOneCustomer(String email);
-
-    // public void customerCouponUpdate(Customer customer, Coupon coupon);
 }

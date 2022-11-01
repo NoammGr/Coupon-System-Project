@@ -13,6 +13,11 @@ import Core.Coupon;
 import Core.CouponSystemException;
 import Core.Customer;
 
+/**
+ * This class is implementation of CouponsDAO , in this class we are using sql
+ * syntax and connetion pool
+ * to connect with the data base.
+ */
 public class CouponsDBDAO implements CouponsDAO {
 
     /**
@@ -266,54 +271,89 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     /**
-     * Using this method will return all coupons that the customer has bought
-     * in order to use this method you need to insert custoemer object .
+     * This method will allow you to get all coupons by category,
+     * you need to insert category in order for this method to work.
      */
-    public ArrayList<Integer> getCustomerCoupons(Customer customer) throws CouponSystemException {
+    public ArrayList<Coupon> getAllCouponByCategory(Category category) throws CouponSystemException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
-        ArrayList<Integer> coupons = new ArrayList<>();
-        String sql = "select coupon_id from customers_vs_coupons where customer_id = ?";
+        ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+        String sql = "select * from Coupons where category = ?";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, customer.getId());
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, category.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                coupons.add(resultSet.getInt(1));
+                coupons.add(new Coupon(resultSet.getInt(1), resultSet.getInt(2),
+                        Category.valueOf(resultSet.getString(3)),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDate(7),
+                        resultSet.getInt(8), resultSet.getDouble(9), resultSet.getString(10)));
             }
             resultSet.close();
-            statement.close();
             return coupons;
         } catch (Exception e) {
-            throw new CouponSystemException("Problem : ", e);
+            throw new CouponSystemException("Problem with get all coupon method : ", e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
     }
 
     /**
-     * Using this method will return all coupons that the customer has bought
-     * in order to use this method you need to insert customer id .
+     * This method allow the customer to get all the coupons that he bought ,
+     * you need to insert customer object.
      */
-    public ArrayList<Integer> getCustomerCoupons(int customerId) throws CouponSystemException {
+    public ArrayList<Coupon> getCustomerCoupon(Customer customer) throws CouponSystemException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
-        ArrayList<Integer> coupons = new ArrayList<>();
-        String sql = "select coupon_id from customers_vs_coupons where customer_id = ?";
+        ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+        String sql = "select * from Coupons join customers_vs_coupons where customer_id = ?";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, customerId);
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, customer.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                coupons.add(resultSet.getInt(1));
+                coupons.add(new Coupon(resultSet.getInt(1), resultSet.getInt(2),
+                        Category.valueOf(resultSet.getString(3)),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDate(7),
+                        resultSet.getInt(8), resultSet.getDouble(9), resultSet.getString(10)));
             }
             resultSet.close();
-            statement.close();
+            preparedStatement.close();
             return coupons;
         } catch (Exception e) {
-            throw new CouponSystemException("Problem : ", e);
+            throw new CouponSystemException("Problem with get customer coupon method : ", e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
     }
+
+    /**
+     * This method allow the customer to get all the coupons that he bought ,
+     * you need to insert customerId .
+     */
+    public ArrayList<Coupon> getCustomerCoupon(int customerId) throws CouponSystemException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = connectionPool.getConnection();
+        ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+        String sql = "select * from Coupons join customers_vs_coupons where customer_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                coupons.add(new Coupon(resultSet.getInt(1), resultSet.getInt(2),
+                        Category.valueOf(resultSet.getString(3)),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDate(7),
+                        resultSet.getInt(8), resultSet.getDouble(9), resultSet.getString(10)));
+            }
+            resultSet.close();
+            preparedStatement.close();
+            return coupons;
+        } catch (Exception e) {
+            throw new CouponSystemException("Problem with get customer coupon method : ", e);
+        } finally {
+            connectionPool.restoreConnection(connection);
+        }
+    }
+
 }

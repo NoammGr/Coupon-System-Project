@@ -11,6 +11,10 @@ import Core.Company;
 import Core.Coupon;
 import Core.CouponSystemException;
 
+/**
+ * This class is implementation of CompaniesDAO , in this class we are using sql syntax and connetion pool
+ * to connect with the data base.
+ */
 public class CompaniesDBDAO implements CompaniesDAO {
 
     /**

@@ -10,8 +10,12 @@ import Core.CouponSystemException;
 import Core.Customer;
 import DAO.CompaniesDAO;
 import DAO.CompaniesDBDAO;
+import DAO.CouponsDAO;
 import DAO.CouponsDBDAO;
 
+/**
+ * This class contains all the logical work .
+ */
 public class CompanyFacade extends ClientFacade {
 
     private Company company;
@@ -19,6 +23,7 @@ public class CompanyFacade extends ClientFacade {
     private int companyId;
 
     public CompanyFacade() {
+
     }
 
     public CompanyFacade(Company company) {
@@ -26,6 +31,9 @@ public class CompanyFacade extends ClientFacade {
         this.company = company;
     }
 
+    /**
+     * This method allow company to login to system !
+     */
     public boolean Login(String email, String password) throws CouponSystemException {
         CompaniesDAO companiesDBDAO = new CompaniesDBDAO();
         Collection<Company> companies = new ArrayList<Company>();
@@ -40,6 +48,9 @@ public class CompanyFacade extends ClientFacade {
         throw new CouponSystemException("Email or password is worng , try again !");
     }
 
+    /**
+     * This method allow company to add coupon .
+     */
     public void addCoupon(Coupon coupon) throws CouponSystemException {
         // CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
         CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
@@ -51,6 +62,9 @@ public class CompanyFacade extends ClientFacade {
         }
     }
 
+    /**
+     * This method allow company to update coupons info
+     */
     public void updateCoupon(Coupon coupon) throws CouponSystemException {
         CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
         Coupon couponTemp = new Coupon();
@@ -65,6 +79,9 @@ public class CompanyFacade extends ClientFacade {
         }
     }
 
+    /**
+     * This method allow company to delete coupon using coupon-id
+     */
     public void deleteCoupon(int couponId) throws CouponSystemException {
         CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
         Collection<Coupon> coupons = new ArrayList<>();
@@ -86,6 +103,9 @@ public class CompanyFacade extends ClientFacade {
         System.out.println("All customers coupons deleted !");
     }
 
+    /**
+     * This method will return all of company coupons belong to company logged in
+     */
     public Collection<Coupon> getCompanyCoupons() throws CouponSystemException {
         Collection<Coupon> tempCoupons = new ArrayList<Coupon>();
         Collection<Coupon> coupons = new ArrayList<Coupon>();
@@ -99,11 +119,15 @@ public class CompanyFacade extends ClientFacade {
         throw new CouponSystemException("Coupon is not exist !");
     }
 
+    /**
+     * This method will return company coupons by category !
+     */
     public Collection<Coupon> getCompanyCoupons(Category category) throws CouponSystemException {
+        CouponsDAO couponsDAO = new CouponsDBDAO();
         Collection<Coupon> tempCoupons = new ArrayList<Coupon>();
         Collection<Coupon> coupons = new ArrayList<Coupon>();
-        tempCoupons.addAll(coupons);
-        for (Coupon coupon : coupons) {
+        tempCoupons.addAll(couponsDAO.getAllCoupon());
+        for (Coupon coupon : tempCoupons) {
             if (coupon.getCompanyId() == this.companyId) {
                 if (coupon.getCategory() == category) {
                     coupons.add(coupon);
@@ -114,11 +138,15 @@ public class CompanyFacade extends ClientFacade {
         throw new CouponSystemException("Coupon is not exist !");
     }
 
+    /**
+     * This method will return company coupons by max price
+     */
     public Collection<Coupon> getCompanyCoupons(double maxPrice) throws CouponSystemException {
+        CouponsDAO couponsDAO = new CouponsDBDAO();
         Collection<Coupon> tempCoupons = new ArrayList<Coupon>();
         Collection<Coupon> coupons = new ArrayList<Coupon>();
-        tempCoupons.addAll(coupons);
-        for (Coupon coupon : coupons) {
+        tempCoupons.addAll(couponsDAO.getAllCoupon());
+        for (Coupon coupon : tempCoupons) {
             if (coupon.getCompanyId() == this.companyId) {
                 if (coupon.getPrice() == maxPrice) {
                     coupons.add(coupon);
@@ -129,7 +157,24 @@ public class CompanyFacade extends ClientFacade {
         throw new CouponSystemException("Coupon is not exist !");
     }
 
+    /**
+     * This method returns all the company details including company coupons
+     */
     public Company getCompanyDetails() {
+        CouponsDAO couponsDAO = new CouponsDBDAO();
+        ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+        ArrayList<Coupon> tempCoupons = new ArrayList<Coupon>();
+        try {
+            tempCoupons.addAll(couponsDAO.getAllCoupon());
+            for (Coupon coupon : tempCoupons) {
+                if (coupon.getCompanyId() == this.companyId) {
+                    coupons.add(coupon);
+                }
+            }
+            this.company.setCoupons(coupons);
+        } catch (Exception e) {
+            throw new CouponSystemException("Error in get company detailes method !" + e);
+        }
         return this.company;
     }
 }

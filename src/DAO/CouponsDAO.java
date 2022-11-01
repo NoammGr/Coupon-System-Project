@@ -3,6 +3,7 @@ package DAO;
 import java.util.ArrayList;
 
 import Core.Coupon;
+import Core.Customer;
 
 public interface CouponsDAO {
     public void addCoupon(Coupon coupon);
@@ -17,9 +18,11 @@ public interface CouponsDAO {
 
     public Coupon getOneCoupon(int couponId);
 
-    public ArrayList<Integer> getCustomerCoupons(int customerId);
-
     public void addCouponPurchase(int customerId, int couponId);
 
     public void deleteCouponPurchase(int customerId, int couponId);
+
+    public ArrayList<Coupon> getCustomerCoupon(Customer customer);
+
+    public ArrayList<Coupon> getCustomerCoupon(int customerId);
 }
