@@ -16,9 +16,12 @@ select coupon_id from customers_vs_coupons where customer_id =1;
 
 select locate(email, password) from Companies ;
 
-select * from Coupons join customers_vs_coupons on coupon_id = customers_vs_coupons.customer_id where customer_id = 18 ;
+select * from Coupons join customers_vs_coupons on coupon_id = (select coupon_id customers_vs_coupons where customer_id = 18);
 
-select * from Coupons where category = 'Restaurant' join customers_vs_coupons where customer_id = 18 ;
+select * from coupons where id = (select coupon_id from customers_vs_coupons where customer_id = 18);
+
+select * from Coupons join customers_vs_coupons where customer_id = 18;
+
 --
 
 drop table Companies;
@@ -79,4 +82,3 @@ coupon_id int ,
 foreign key (coupon_id) references Coupons(id) on update cascade on delete cascade ,
 primary key (customer_id, coupon_id)
 );
-
