@@ -1,7 +1,6 @@
 package ConnectionSystem;
 
 import Core.CouponSystemException;
-import DailyJob.CouponExpirationDailyJob;
 import Facades.AdminFacade;
 import Facades.ClientFacade;
 import Facades.CompanyFacade;
@@ -11,11 +10,9 @@ import Facades.CustomersFacade;
  * This class gives the option to login system .
  */
 public class LoginManager {
-    CouponExpirationDailyJob couponExpirationDailyJob = new CouponExpirationDailyJob();
-    Thread dThread = new Thread(couponExpirationDailyJob);
 
     public LoginManager() {
-        // dThread.start();
+
     }
 
     private static LoginManager instance;

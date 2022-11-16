@@ -41,7 +41,7 @@ public class CustomersDBDAO implements CustomersDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException("email or password is wrong try again !");
+            throw new CouponSystemException("email or password is wrong try again !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -67,7 +67,7 @@ public class CustomersDBDAO implements CustomersDAO {
             statement.executeUpdate();
             System.out.println("Added user successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException("Erorr in addCustomer method  - " + e);
+            throw new CouponSystemException("Erorr in add customer method  - " + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -92,7 +92,7 @@ public class CustomersDBDAO implements CustomersDAO {
             statement.executeUpdate();
             System.out.println("Customer updated successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("Error in update customer method , please check the method agin !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -113,7 +113,8 @@ public class CustomersDBDAO implements CustomersDAO {
             statement.executeUpdate();
             System.out.println("Customer has been deleted !");
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException(
+                    "Error in delete customer method , please check the customer id agin !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -139,7 +140,7 @@ public class CustomersDBDAO implements CustomersDAO {
             statement.close();
             return customers;
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("Error in get all customer method , please check the method agin !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -172,7 +173,7 @@ public class CustomersDBDAO implements CustomersDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("Error in get customer method , please check the customer id agin !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -204,7 +205,7 @@ public class CustomersDBDAO implements CustomersDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException();
+            throw new CouponSystemException("Error in get customer method , please check the email agin !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }

@@ -1,11 +1,12 @@
-package Connection;
+package Tests;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import Connection.ConnectionPool;
 import Core.CouponSystemException;
 
-public class Test {
+public class ConnectionPoolTest {
     public static void main(String[] args) {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             System.out.println(connection);

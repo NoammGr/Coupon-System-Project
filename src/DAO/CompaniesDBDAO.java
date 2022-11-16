@@ -12,7 +12,8 @@ import Core.Coupon;
 import Core.CouponSystemException;
 
 /**
- * This class is implementation of CompaniesDAO , in this class we are using sql syntax and connetion pool
+ * This class is implementation of CompaniesDAO , in this class we are using sql
+ * syntax and connetion pool
  * to connect with the data base.
  */
 public class CompaniesDBDAO implements CompaniesDAO {
@@ -39,7 +40,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException("check email and password and try again !");
+            throw new CouponSystemException("check email and password and try again !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -63,7 +64,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             statement.executeUpdate();
             System.out.println("Added company successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException("Check the company id !");
+            throw new CouponSystemException("Check the company id !" + e);
 
         } finally {
             connectionPool.restoreConnection(connection);
@@ -88,7 +89,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             statement.executeUpdate();
             System.out.println("Company updated successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException("Update company failed !");
+            throw new CouponSystemException("Update company failed !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -109,7 +110,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             statement.executeUpdate();
             System.out.println("Company has been deleted !");
         } catch (Exception e) {
-            throw new CouponSystemException("Company delete has failed !");
+            throw new CouponSystemException("Company delete has failed !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -135,7 +136,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             statement.close();
             return companies;
         } catch (Exception e) {
-            throw new CouponSystemException("Getting all company method failed !");
+            throw new CouponSystemException("Getting all company method failed !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -166,7 +167,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            throw new CouponSystemException("Please check the company id !");
+            throw new CouponSystemException("Please check the company id !" + e);
         } finally {
             connectionPool.restoreConnection(connection);
         }
@@ -195,7 +196,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             statement.executeUpdate();
             System.out.println("Added coupon successfully !");
         } catch (Exception e) {
-            throw new CouponSystemException("Update failed - ", e);
+            throw new CouponSystemException("Update failed - " + e);
 
         } finally {
             connectionPool.restoreConnection(connection);

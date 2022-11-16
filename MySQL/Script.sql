@@ -20,7 +20,7 @@ select * from Coupons join customers_vs_coupons on coupon_id = (select coupon_id
 
 select * from coupons where id = (select coupon_id from customers_vs_coupons where customer_id = 18);
 
-select * from Coupons join customers_vs_coupons where customer_id = 18;
+select * from coupons join customers_vs_cֹoupons where customer_id = ?;
 
 --
 
