@@ -77,8 +77,8 @@ image varchar(1000)
 
 create table customers_vs_coupons(
 customer_id int ,
-foreign key (customer_id) references Customers(id) on update cascade on delete cascade,
+foreign key (customer_id) references Customers(id) on delete cascade,
 coupon_id int ,
-foreign key (coupon_id) references Coupons(id) on update cascade on delete cascade ,
+foreign key (coupon_id) references Coupons(id) on delete cascade ,
 primary key (customer_id, coupon_id)
 );

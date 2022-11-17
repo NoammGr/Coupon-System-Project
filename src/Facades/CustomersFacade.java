@@ -67,7 +67,7 @@ public class CustomersFacade extends ClientFacade {
             if (tempCoupon.getAmount() == 0) {
                 throw new CouponSystemException("Coupon out of stock ! please try again later");
             }
-            couponsDAO.addCouponPurchase(this.customerId, tempCoupon.getId());
+            couponsDAO.addCouponPurchase(this.customerId, coupon.getId());
             tempCoupon.setAmount(tempCoupon.getAmount() - 1);
             couponsDAO.updateCoupon(tempCoupon);
         } catch (Exception e) {
