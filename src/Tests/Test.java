@@ -32,32 +32,32 @@ public class Test {
     //         "email6", "password3",
     //         ClientType.Company);
 
-    private static CustomersFacade loginManagerCustomer = (CustomersFacade) LoginManager.getInstance().login(
-            "EldarJB@gmail.com", "12314321",
-            ClientType.Customer);
+    // private static CustomersFacade loginManagerCustomer = (CustomersFacade) LoginManager.getInstance().login(
+    //         "EldarJB@gmail.com", "12314321",
+    //         ClientType.Customer);
 
-    public static void main(String[] args) {
+    public void testAll() {
         // dThread.start();
-        CustomersDBDAO customersDBDAO = new CustomersDBDAO();
-        CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
-        CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
+        // CustomersDBDAO customersDBDAO = new CustomersDBDAO();
+        // CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
+        // CouponsDBDAO couponsDBDAO = new CouponsDBDAO();
         // AdminFacade adminFacade = new AdminFacade();
         // CompanyFacade companyFacade = new CompanyFacade();
-        CustomersFacade customersFacade = new CustomersFacade();
+        // CustomersFacade customersFacade = new CustomersFacade();
         // LoginManager loginManager = new LoginManager();
         try (Connection connection = ConnectionPool.getInstance().getConnection();) {
-            Company company = new Company(0, "Intel", "Intel@gmail.com", "IntelProjects100");
-            Category category = Category.Restaurant;
-            String s = "2022-11-18";
-            Date date = Date.valueOf(s);
-            Customer customer = new Customer(0, "Eldar", "JB", "EldarJB@gmail.com",
-            "12314321");
-            Coupon coupon = new Coupon(2, 1, category, "IDK", "IDK",
-                    date, date,
-                    200, 1000, "image");
+            // Company company = new Company(0, "Intel", "Intel@gmail.com", "IntelProjects100");
+            // Category category = Category.Restaurant;
+            // String s = "2022-11-18";
+            // Date date = Date.valueOf(s);
+            // Customer customer = new Customer(0, "Eldar", "JB", "EldarJB@gmail.com",
+            //         "12314321");
+            // Coupon coupon = new Coupon(2, 1, category, "IDK", "IDK",
+            //         date, date,
+            //         200, 1000, "image");
             // System.out.println(companiesDBDAO.getAllCompanies());
             // companiesDBDAO.addCompany(company);
-            // companiesDBDAO.deleteCompany(company);
+            // companiesDBDAO.deleteCompany(company.getId());
             // customersDBDAO.addCustomer(customer);
             // customersDBDAO.updateCustomer(customer);
             // customersDBDAO.deleteCustomer(2);
@@ -70,33 +70,38 @@ public class Test {
             // System.out.println(couponsDBDAO.getOneCoupon(2));
             // couponsDBDAO.addCouponPurchase(18, 41);
             // couponsDBDAO.deleteCouponPurchase(1, 1);
-            // adminFacade.Login("admin@admin.com", "admin");
-            // adminFacade.addCustomer(customer);
-            // adminFacade.removeCustomer(customer);
-            // adminFacade.createCompany(company);
-            // adminFacade.deleteCompany(company);
-            // System.out.println(adminFacade.getAlCustomers());
+            // adminFacade.login("admin@admin.com", "admin");
+            // adminFacade.addCompany(null);
+            // adminFacade.addCustomer(null);
+            // adminFacade.deleteCompany(null);
+            // adminFacade.deleteCustomer(null);
+            // adminFacade.getAllCompanies();
+            // adminFacade.getAllCustomers();
+            // adminFacade.getOneCompany(0);
+            // adminFacade.getOneCustomer(0);
+            // adminFacade.updateCompany(null);
+            // adminFacade.updateCustomer(null);
+            // System.out.println(adminFacade.getAllCustomers());
             // System.out.println(adminFacade.getAllCompanies());
-            // companyFacade.Login("email0", "password0");
+            // companyFacade.login("email0", "password0");
             // companyFacade.addCoupon(coupon);
             // companyFacade.updateCoupon(coupon);
             // companyFacade.deleteCoupon(2);
             // loginManager.login("email6", "password3", ClientType.Company);
-            // loginManager.createCoupon(coupon);
-            // couponsDBDAO.getCustomerCoupons(1);
+            // couponsDBDAO.getCustomerCoupon(1);
             // customersFacade.purchaseCoupon(coupon);
-            // loginManagerAdmin.Login("null", "null");
+            // loginManagerAdmin.login("null", "null");
             // loginManagerAdmin.addCustomer(null);
-            // loginManagerAdmin.createCompany(null);
+            // loginManagerAdmin.addCompany(null);
             // loginManagerAdmin.deleteCompany(null);
-            // loginManagerAdmin.getAlCustomers();
+            // loginManagerAdmin.getAllCustomers();
             // loginManagerAdmin.getAllCompanies();
-            // loginManagerAdmin.getCompany(0);
-            // loginManagerAdmin.getCustomer(0);
-            // loginManagerAdmin.removeCustomer(null);
+            // loginManagerAdmin.getOneCompany(0);
+            // loginManagerAdmin.getOneCustomer(0);
+            // loginManagerAdmin.deleteCustomer(null);
             // loginManagerAdmin.updateCompany(null);
             // loginManagerAdmin.updateCustomer(null);
-            // loginManagerCompany.Login("null", "null");
+            // loginManagerCompany.login("null", "null");
             // loginManagerCompany.addCoupon(null);
             // loginManagerCompany.deleteCoupon(0);
             // loginManagerCompany.getCompanyCoupons();
@@ -104,8 +109,8 @@ public class Test {
             // loginManagerCompany.getCompanyCoupons(0);
             // loginManagerCompany.getCompanyDetails();
             // loginManagerCompany.updateCoupon(null);
-            // loginManagerCustomer.Login("null", "null");
-            loginManagerCustomer.purchaseCoupon(coupon);
+            // loginManagerCustomer.login("null", "null");
+            // loginManagerCustomer.purchaseCoupon(coupon);
             // System.out.println(loginManagerCustomer.getCustomerCoupon());
             // System.out.println(loginManagerCustomer.getCustomerCoupon(1000));
             // System.out.println(loginManagerCustomer.getCustomerCoupon(Category.Restaurant));

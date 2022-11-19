@@ -12,7 +12,7 @@ import DAO.CustomersDBDAO;
  */
 public abstract class ClientFacade {
 
-    abstract boolean Login(String email, String password);
+    abstract boolean login(String email, String password);
 
     CompaniesDAO companiesDAO = new CompaniesDBDAO();
     CustomersDAO customersDAO = new CustomersDBDAO();

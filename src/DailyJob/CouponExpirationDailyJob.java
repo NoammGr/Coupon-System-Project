@@ -10,9 +10,13 @@ import DAO.CouponsDAO;
 import DAO.CouponsDBDAO;
 
 /**
- * This thread will check every day if there is any coupons expired and will delete them .
+ * This thread will check every day if there is any coupons expired and will
+ * delete them .
  */
 public class CouponExpirationDailyJob implements Runnable {
+
+    // private Thread thread = new Thread(this, "CouponExpirationDailyJob");
+
     private static CouponsDAO couponsDAO = new CouponsDBDAO();
     private boolean quit = true;
 
@@ -40,7 +44,11 @@ public class CouponExpirationDailyJob implements Runnable {
         }
     }
 
-    public void stop() {
-        Thread.interrupted();
-    }
+    // public void startJob() {
+    // this.thread.start();
+    // }
+
+    // public void stop() {
+    // this.thread.interrupt();
+    // }
 }

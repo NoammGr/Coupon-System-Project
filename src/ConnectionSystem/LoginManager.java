@@ -28,19 +28,19 @@ public class LoginManager {
 
         if (client == (ClientType.Administrator)) {
             AdminFacade adminFacade = new AdminFacade();
-            adminFacade.Login(name, password);
+            adminFacade.login(name, password);
             return adminFacade;
         }
 
         if (client == (ClientType.Company)) {
             CompanyFacade companyFacade = new CompanyFacade();
-            companyFacade.Login(name, password);
+            companyFacade.login(name, password);
             return companyFacade;
         }
 
         if (client == (ClientType.Customer)) {
             CustomersFacade customersFacade = new CustomersFacade();
-            customersFacade.Login(name, password);
+            customersFacade.login(name, password);
             return customersFacade;
         }
         throw new CouponSystemException("Wrong email or password please try again !");

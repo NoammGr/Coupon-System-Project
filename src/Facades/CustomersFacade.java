@@ -34,7 +34,7 @@ public class CustomersFacade extends ClientFacade {
      * This method allow customer to login to system !
      */
     @Override
-    public boolean Login(String email, String password) throws CouponSystemException {
+    public boolean login(String email, String password) throws CouponSystemException {
         Collection<Customer> customers = new ArrayList<Customer>();
         customers = customersDAO.getAllCustomers();
         for (Customer customer : customers) {

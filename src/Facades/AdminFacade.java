@@ -24,7 +24,7 @@ public class AdminFacade extends ClientFacade {
     /**
      * Login method for admins .
      */
-    public boolean Login(String email, String password) throws CouponSystemException {
+    public boolean login(String email, String password) throws CouponSystemException {
         if (email == "admin@admin.com" && password == "admin") {
             System.out.println("Welcome " + email + " !");
             return true;
@@ -34,9 +34,9 @@ public class AdminFacade extends ClientFacade {
     }
 
     /**
-     * This method will allow admin to create new companies .
+     * This method will allow admin to add new companies .
      */
-    public void createCompany(Company company) throws CouponSystemException {
+    public void addCompany(Company company) throws CouponSystemException {
         CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
         if (companiesDBDAO.getOneCompany(company.getId()) == null) {
             companiesDBDAO.addCompany(company);
@@ -104,7 +104,7 @@ public class AdminFacade extends ClientFacade {
      * This method will return company object using company-id ,
      * using this method will also look if company exists !
      */
-    public Company getCompany(int companyId) throws CouponSystemException {
+    public Company getOneCompany(int companyId) throws CouponSystemException {
         CompaniesDBDAO companiesDBDAO = new CompaniesDBDAO();
         if (companiesDBDAO.getOneCompany(companyId) == null) {
             throw new CouponSystemException("Company doesn't exist , check the Id again !");
@@ -148,10 +148,10 @@ public class AdminFacade extends ClientFacade {
     }
 
     /**
-     * This method will remove customer and all of this coupons,
-     * in order to use this method you need to insert customer object 
+     * This method will delete customer and all of this coupons,
+     * in order to use this method you need to insert customer object
      */
-    public void removeCustomer(Customer customer) throws CouponSystemException {
+    public void deleteCustomer(Customer customer) throws CouponSystemException {
 
         CustomersDBDAO customersDBDAO = new CustomersDBDAO();
         Customer custom = new Customer();
@@ -176,7 +176,7 @@ public class AdminFacade extends ClientFacade {
     /**
      * This method will return all customers exists in app !
      */
-    public Collection<Customer> getAlCustomers() throws CouponSystemException {
+    public Collection<Customer> getAllCustomers() throws CouponSystemException {
         CustomersDBDAO customersDBDAO = new CustomersDBDAO();
         Collection<Customer> customers = new ArrayList<Customer>();
         try {
@@ -190,7 +190,7 @@ public class AdminFacade extends ClientFacade {
     /**
      * This method returns customer object using customer-id
      */
-    public Customer getCustomer(int customerId) throws CouponSystemException {
+    public Customer getOneCustomer(int customerId) throws CouponSystemException {
         CustomersDBDAO customersDBDAO = new CustomersDBDAO();
         if (customersDBDAO.getOneCustomer(customerId) == null) {
             throw new CouponSystemException("Customer doesn't exist !");

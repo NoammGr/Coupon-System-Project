@@ -34,7 +34,7 @@ public class CompanyFacade extends ClientFacade {
     /**
      * This method allow company to login to system !
      */
-    public boolean Login(String email, String password) throws CouponSystemException {
+    public boolean login(String email, String password) throws CouponSystemException {
         CompaniesDAO companiesDBDAO = new CompaniesDBDAO();
         Collection<Company> companies = new ArrayList<Company>();
         companies = companiesDBDAO.getAllCompanies();
